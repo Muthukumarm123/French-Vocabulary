@@ -1,0 +1,917 @@
+<!doctype html>
+<html lang="fr" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>French Vocabulary Library</title>
+    <meta name="description" content="A comprehensive, beautifully organised French vocabulary reference of 135,000 words with CEFR levels, categories, native audio pronunciation, AI French Doubt Clearing tutor, bilingual translator, and AI missing word generator." />
+    <meta property="og:title" content="French Vocabulary Library" />
+    <meta property="og:description" content="A comprehensive, beautifully organised French vocabulary reference of 135,000 words with CEFR levels, categories, native audio pronunciation, AI French Doubt Clearing tutor, bilingual translator, and AI missing word generator." />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    
+    <!-- Pure CSS stylesheet -->
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <!-- Full-screen Loading Overlay for 135,000 Lexicon -->
+    <div class="loading-overlay" id="loading-overlay" role="status" aria-live="polite">
+      <div class="brand-icon-flag" aria-hidden="true" style="width: 48px; height: 32px; border-radius: 6px;">
+        <span class="flag-blue"></span>
+        <span class="flag-white"></span>
+        <span class="flag-red"></span>
+      </div>
+      <div class="loading-spinner" aria-hidden="true"></div>
+      <div style="text-align: center;">
+        <div class="loading-title">French Vocabulary Library</div>
+        <div class="loading-subtitle" id="loading-status-text">Loading 135,000 French words...</div>
+      </div>
+    </div>
+
+    <div class="app-layout">
+
+      <!-- Sidebar Backdrop for Mobile Drawer -->
+      <div class="sidebar-backdrop" id="sidebar-backdrop" aria-hidden="true"></div>
+
+      <!-- A. Collapsible Left Sidebar -->
+      <aside class="app-sidebar" id="app-sidebar" aria-label="Main Navigation">
+        <div class="sidebar-header">
+          <div class="brand-wrapper">
+            <div class="brand-icon-flag" aria-hidden="true">
+              <span class="flag-blue"></span>
+              <span class="flag-white"></span>
+              <span class="flag-red"></span>
+            </div>
+            <div class="brand-title-group">
+              <h1>French Vocabulary</h1>
+              <div class="brand-subtitle">Learn &bull; Explore &bull; Master</div>
+            </div>
+          </div>
+          <button type="button" class="sidebar-close-btn" id="sidebar-close-btn" aria-label="Close sidebar">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+        </div>
+
+        <div class="sidebar-scroll-area" id="sidebar-scroll-area">
+          <!-- Dynamically populated from script.js (Home, All, By Level, Categories & Subcategories) -->
+        </div>
+      </aside>
+
+      <!-- Main App Content Wrapper -->
+      <div class="app-main-wrapper">
+        <!-- B. Top Header -->
+        <header class="app-header">
+          <div class="header-left">
+            <button type="button" class="menu-toggle-btn" id="menu-toggle-btn" aria-label="Open navigation menu">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+            </button>
+            <nav class="header-breadcrumbs" aria-label="Breadcrumb">
+              <span>Library</span>
+              <span style="opacity: 0.5;">/</span>
+              <span class="active-crumb" id="breadcrumb-current">Home</span>
+            </nav>
+          </div>
+
+          <!-- Global Fast Search -->
+          <div class="header-search-container">
+            <div class="search-input-wrapper">
+              <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+              <input
+                type="text"
+                class="global-search-input"
+                id="header-search-input"
+                placeholder="Search French or English words, tags, examples... (Press '/' to focus)"
+                aria-label="Search French vocabulary database"
+                autocomplete="off"
+                spellcheck="false"
+              />
+              <button type="button" class="search-clear-btn" id="search-clear-btn" aria-label="Clear search input">
+                &times;
+              </button>
+            </div>
+          </div>
+
+          <!-- Header Right Actions (AI Tools & Theme Toggle) -->
+          <div class="header-actions">
+            <button type="button" class="header-tool-btn" id="header-doubt-btn" title="Ask AI French Tutor / Clear Doubts">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
+              <span>AI Tutor</span>
+            </button>
+            <button type="button" class="header-tool-btn" id="header-translator-btn" title="AI French <-> English Translator">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m5 8 6 6"/><path d="m4 14 6-6 2-3"/><path d="M2 5h12"/><path d="M7 2h1"/><path d="m22 22-5-10-5 10"/><path d="M14 18h6"/></svg>
+              <span>Translator</span>
+            </button>
+            <button type="button" class="header-tool-btn header-tool-accent" id="header-add-word-btn" title="Add Missing Word with AI">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+              <span>+ Add Word</span>
+            </button>
+            <button type="button" class="theme-toggle-btn" id="theme-toggle-btn" aria-label="Toggle dark mode theme">
+              <svg class="theme-icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+              <svg class="theme-icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+            </button>
+          </div>
+        </header>
+
+        <!-- C. Main Content Area -->
+        <main class="app-content" id="main-content">
+          <!-- Network / Database Error Screen -->
+          <div class="error-screen-banner" id="error-screen-banner" role="alert">
+            <h2 style="font-size: 1.2rem; font-weight: 700; margin-bottom: 0.5rem;">Unable to load vocabulary data</h2>
+            <p style="font-size: 0.9rem; margin-bottom: 1rem;">
+              The vocabulary database (vocabulary.json) could not be retrieved. Please check your file system or connection and try again.
+            </p>
+            <button type="button" class="reset-filters-btn" id="error-retry-btn" style="background:#fff; color:#991b1b; border-color:#fca5a5;">
+              Retry Loading Database
+            </button>
+          </div>
+
+          <!-- View 1: Home Page -->
+          <div class="view-panel active" id="view-home">
+            <!-- Hero Introduction -->
+            <section class="hero-section" aria-labelledby="hero-title">
+              <div class="hero-kicker">Digital Reference Library</div>
+              <h2 class="hero-title" id="hero-title">French Vocabulary</h2>
+              <p class="hero-lead">
+                Your organised French vocabulary reference. Explore authentic words, grammatical gender, CEFR levels, conjugations, and native pronunciation guides.
+              </p>
+            </section>
+
+            <!-- Large Navigation Cards -->
+            <section class="hero-actions-grid" aria-label="Quick Actions">
+              <button type="button" class="action-nav-card" id="nav-card-browse">
+                <div class="action-card-header">
+                  <div class="action-card-icon" aria-hidden="true">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/><path d="M6 6h10"/><path d="M6 10h10"/></svg>
+                  </div>
+                  <div class="action-card-title">Browse Vocabulary</div>
+                </div>
+                <p class="action-card-desc">Access the entire database with advanced multi-parameter filtering, sorting, and pronunciations.</p>
+              </button>
+
+              <button type="button" class="action-nav-card" id="nav-card-levels">
+                <div class="action-card-header">
+                  <div class="action-card-icon" aria-hidden="true">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                  </div>
+                  <div class="action-card-title">Browse by Level</div>
+                </div>
+                <p class="action-card-desc">Explore vocabulary categorized from A1 Beginner foundations up to C2 Mastery proficiency.</p>
+              </button>
+
+              <button type="button" class="action-nav-card" id="nav-card-categories">
+                <div class="action-card-header">
+                  <div class="action-card-icon" aria-hidden="true">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+                  </div>
+                  <div class="action-card-title">Browse by Category</div>
+                </div>
+                <p class="action-card-desc">Navigate organized topical themes including Food & Drink, Home, Travel, Common Verbs, and more.</p>
+              </button>
+
+              <button type="button" class="action-nav-card" id="nav-card-search">
+                <div class="action-card-header">
+                  <div class="action-card-icon" aria-hidden="true">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                  </div>
+                  <div class="action-card-title">Search Vocabulary</div>
+                </div>
+                <p class="action-card-desc">Instantly locate French terms by French word, English translation, definition, or grammatical tags.</p>
+              </button>
+
+              <button type="button" class="action-nav-card action-nav-highlight" id="nav-card-doubt">
+                <div class="action-card-header">
+                  <div class="action-card-icon" aria-hidden="true">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
+                  </div>
+                  <div class="action-card-title">AI Doubt Tutor</div>
+                </div>
+                <p class="action-card-desc">Clear any doubt regarding French grammar, nuances, word distinctions (e.g. savoir vs connaître), or usage.</p>
+              </button>
+
+              <button type="button" class="action-nav-card action-nav-highlight" id="nav-card-translator">
+                <div class="action-card-header">
+                  <div class="action-card-icon" aria-hidden="true">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m5 8 6 6"/><path d="m4 14 6-6 2-3"/><path d="M2 5h12"/><path d="M7 2h1"/><path d="m22 22-5-10-5 10"/><path d="M14 18h6"/></svg>
+                  </div>
+                  <div class="action-card-title">AI Translator</div>
+                </div>
+                <p class="action-card-desc">Translate French & English with contextual nuance and extract key vocabulary directly into your library.</p>
+              </button>
+            </section>
+
+            <!-- Database Statistics Overview (Clean educational metrics, not user progress) -->
+            <section aria-labelledby="stats-heading">
+              <div class="section-heading-row">
+                <h3 class="section-title" id="stats-heading">Database Overview</h3>
+                <span class="section-subtext">Computed dynamically from vocabulary.json</span>
+              </div>
+              <div class="database-stats-grid">
+                <div class="stat-item-card">
+                  <div class="stat-number" id="stat-total-words">0</div>
+                  <div class="stat-label">Total Words</div>
+                </div>
+                <div class="stat-item-card">
+                  <div class="stat-number" id="stat-total-categories">0</div>
+                  <div class="stat-label">Categories</div>
+                </div>
+                <div class="stat-item-card">
+                  <div class="stat-number" id="stat-total-levels">0</div>
+                  <div class="stat-label">CEFR Levels</div>
+                </div>
+                <div class="stat-item-card">
+                  <div class="stat-number" id="stat-total-verbs">0</div>
+                  <div class="stat-label">Verbs</div>
+                </div>
+                <div class="stat-item-card">
+                  <div class="stat-number" id="stat-total-nouns">0</div>
+                  <div class="stat-label">Nouns</div>
+                </div>
+                <div class="stat-item-card">
+                  <div class="stat-number" id="stat-total-adjectives">0</div>
+                  <div class="stat-label">Adjectives</div>
+                </div>
+              </div>
+            </section>
+
+            <!-- CEFR Levels Grid -->
+            <section aria-labelledby="levels-heading" style="margin-bottom: 2.75rem;">
+              <div class="section-heading-row">
+                <h3 class="section-title" id="levels-heading">CEFR Levels</h3>
+                <span class="section-subtext">Common European Framework of Reference for Languages</span>
+              </div>
+              <div class="levels-showcase-grid" id="home-levels-grid">
+                <!-- Populated dynamically from script.js -->
+              </div>
+            </section>
+
+            <!-- Categories Showcase Grid -->
+            <section aria-labelledby="categories-heading">
+              <div class="section-heading-row">
+                <h3 class="section-title" id="categories-heading">Featured Categories</h3>
+                <span class="section-subtext">Topic-driven vocabulary clusters</span>
+              </div>
+              <div class="categories-showcase-grid" id="home-categories-grid">
+                <!-- Populated dynamically from script.js -->
+              </div>
+            </section>
+          </div>
+
+          <!-- View 2: Vocabulary / Browse / Category / Level View -->
+          <div class="view-panel" id="view-vocabulary">
+            <!-- View Header -->
+            <div class="view-header">
+              <div class="view-headline-row">
+                <div>
+                  <h2 class="view-main-title" id="view-main-title">All French Vocabulary</h2>
+                  <p class="view-description" id="view-description">
+                    Comprehensive reference library of French vocabulary, verbs, and expressions with grammatical details.
+                  </p>
+                </div>
+              </div>
+
+              <!-- Horizontal Subcategory Tabs (Displayed when viewing a Category) -->
+              <div class="subcategory-tabs-container" id="subcategory-tabs" role="tablist" aria-label="Subcategory filter tabs">
+                <!-- Populated dynamically from script.js -->
+              </div>
+            </div>
+
+            <!-- Filter Toolbar -->
+            <section class="filter-toolbar" aria-label="Vocabulary Filters">
+              <div class="filter-grid">
+                <!-- Level Select -->
+                <div class="filter-group">
+                  <label class="filter-label" for="filter-level-select">CEFR Level</label>
+                  <select class="filter-select" id="filter-level-select">
+                    <option value="all">All Levels</option>
+                    <option value="A1">A1 — Beginner</option>
+                    <option value="A2">A2 — Elementary</option>
+                    <option value="B1">B1 — Intermediate</option>
+                    <option value="B2">B2 — Upper-Intermediate</option>
+                    <option value="C1">C1 — Advanced</option>
+                    <option value="C2">C2 — Mastery</option>
+                  </select>
+                </div>
+
+                <!-- Word Type Select -->
+                <div class="filter-group">
+                  <label class="filter-label" for="filter-type-select">Word Type</label>
+                  <select class="filter-select" id="filter-type-select">
+                    <option value="all">All Word Types</option>
+                    <option value="noun">Noun</option>
+                    <option value="verb">Verb</option>
+                    <option value="adjective">Adjective</option>
+                    <option value="adverb">Adverb</option>
+                    <option value="pronoun">Pronoun</option>
+                    <option value="preposition">Preposition</option>
+                    <option value="conjunction">Conjunction</option>
+                    <option value="question-word">Question Word</option>
+                    <option value="expression">Useful Expression</option>
+                  </select>
+                </div>
+
+                <!-- Category Select -->
+                <div class="filter-group">
+                  <label class="filter-label" for="filter-category-select">Category</label>
+                  <select class="filter-select" id="filter-category-select">
+                    <option value="all">All Categories</option>
+                  </select>
+                </div>
+
+                <!-- Subcategory Select -->
+                <div class="filter-group">
+                  <label class="filter-label" for="filter-subcategory-select">Subcategory</label>
+                  <select class="filter-select" id="filter-subcategory-select" disabled>
+                    <option value="all">All Subcategories</option>
+                  </select>
+                </div>
+
+                <!-- Sort Order Select -->
+                <div class="filter-group">
+                  <label class="filter-label" for="filter-sort-select">Sort By</label>
+                  <select class="filter-select" id="filter-sort-select">
+                    <option value="fr-asc">French A &rarr; Z</option>
+                    <option value="fr-desc">French Z &rarr; A</option>
+                    <option value="en-asc">English A &rarr; Z</option>
+                    <option value="level">CEFR Level (A1 &rarr; C2)</option>
+                    <option value="category">Category Name</option>
+                  </select>
+                </div>
+
+                <!-- Reset Action -->
+                <div class="filter-actions">
+                  <button type="button" class="reset-filters-btn" id="reset-filters-btn">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path d="M3 3v5h5"></path></svg>
+                    Reset Filters
+                  </button>
+                </div>
+              </div>
+            </section>
+
+            <!-- Results Summary & Active Filters Bar + Display Mode Selector -->
+            <div class="results-status-bar">
+              <div class="results-status-left">
+                <div class="results-count-text" id="results-count-text">Loading words...</div>
+                <div class="active-filter-chips" id="active-filter-chips"></div>
+              </div>
+
+              <!-- Book Mode vs Row Mode Switcher -->
+              <div class="display-mode-selector" role="group" aria-label="Vocabulary display mode">
+                <button type="button" class="display-mode-btn active" id="btn-mode-book" title="Book Mode (Cards Grid)">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/><path d="M6 6h10"/><path d="M6 10h10"/></svg>
+                  <span>Book Mode</span>
+                </button>
+                <button type="button" class="display-mode-btn" id="btn-mode-row" title="Row Mode (Table of French & English Words)">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+                  <span>Row Mode</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Vocabulary Cards Grid (Book Mode) -->
+            <section class="vocab-cards-grid" id="vocab-cards-grid" aria-label="Vocabulary Cards (Book Mode)">
+              <!-- Populated dynamically from script.js -->
+            </section>
+
+            <!-- Vocabulary Rows Container (Row Mode) -->
+            <section class="vocab-rows-container" id="vocab-rows-container" style="display: none;" aria-label="Vocabulary List (Row Mode)">
+              <div class="vocab-table-wrapper">
+                <table class="vocab-table">
+                  <thead>
+                    <tr>
+                      <th style="width: 48px; text-align: center;">🔊</th>
+                      <th style="min-width: 170px;">French Word</th>
+                      <th style="min-width: 190px;">English Translation</th>
+                      <th style="width: 110px;">Type</th>
+                      <th style="width: 90px;">Level</th>
+                      <th style="min-width: 140px;">Subcategory</th>
+                      <th style="width: 60px; text-align: center;">Info</th>
+                    </tr>
+                  </thead>
+                  <tbody id="vocab-rows-tbody">
+                    <!-- Populated dynamically from script.js -->
+                  </tbody>
+                </table>
+              </div>
+            </section>
+
+            <!-- Empty Search State -->
+            <div class="empty-state-container" id="empty-state-container" role="status">
+              <svg class="empty-state-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><line x1="8" y1="11" x2="14" y2="11"></line></svg>
+              <h3 class="empty-state-title">No vocabulary matches your search</h3>
+              <p class="empty-state-desc">
+                We couldn't find any entries matching your current filters or search term. Try clearing filters or searching for alternative English or French terms.
+              </p>
+              <div class="empty-ai-box" id="empty-ai-box" style="display: none; margin-top: 1.25rem;">
+                <p class="empty-ai-prompt" style="font-size: 0.95rem; color: var(--text-primary); margin-bottom: 0.6rem; font-weight: 500;">
+                  Not found in the 135,000 reference entries?
+                </p>
+                <button type="button" class="empty-ai-btn" id="empty-ai-add-btn">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+                  <span>Generate &amp; Add &ldquo;<span id="empty-search-word"></span>&rdquo; with AI</span>
+                </button>
+              </div>
+              <button type="button" class="reset-filters-btn" id="empty-reset-btn" style="margin: 1rem auto 0;">
+                Clear All Filters
+              </button>
+            </div>
+
+            <!-- Pagination Controls -->
+            <nav class="pagination-container" id="pagination-container" aria-label="Vocabulary pages navigation">
+              <button type="button" class="page-btn" id="page-prev-btn" aria-label="Go to previous page">
+                &larr; Prev
+              </button>
+              <div class="pagination-pages" id="pagination-pages"></div>
+              <button type="button" class="page-btn" id="page-next-btn" aria-label="Go to next page">
+                Next &rarr;
+              </button>
+              <span class="pagination-info-text" id="pagination-info-text"></span>
+            </nav>
+          </div>
+
+          <!-- View 3: AI French Doubt Clearing & Tutor View -->
+          <div class="view-panel" id="view-doubt">
+            <div class="ai-view-hero">
+              <div class="ai-hero-badge">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                <span>AI Linguistic Tutor</span>
+              </div>
+              <h2 class="view-main-title">Clear My Doubt</h2>
+              <p class="view-description">
+                Ask any question about French grammar, word distinctions, idioms, pronunciation rules, or conjugations. Receive rigorous, pedagogical explanations with authentic examples.
+              </p>
+            </div>
+
+            <!-- Quick Doubt Inspiration Chips -->
+            <div class="quick-prompts-container">
+              <div class="quick-prompts-title">Common Study Doubts:</div>
+              <div class="quick-prompts-list" id="doubt-quick-prompts">
+                <button type="button" class="prompt-chip" data-question="What is the difference between 'savoir' and 'connaître' with practical examples?">
+                  Savoir vs Connaître
+                </button>
+                <button type="button" class="prompt-chip" data-question="When do I use Passé Composé vs Imparfait in French narration?">
+                  Passé Composé vs Imparfait
+                </button>
+                <button type="button" class="prompt-chip" data-question="What is the difference between 'C\'est' and 'Il est' for descriptions?">
+                  C'est vs Il est
+                </button>
+                <button type="button" class="prompt-chip" data-question="Explain the difference between 'an' and 'année', 'jour' and 'journée'.">
+                  An vs Année, Jour vs Journée
+                </button>
+                <button type="button" class="prompt-chip" data-question="How does the French Subjunctive mood work and when is it strictly required?">
+                  Subjunctive Mood Basics
+                </button>
+                <button type="button" class="prompt-chip" data-question="How do I accurately pronounce French nasal vowels (an/en, on, in)?">
+                  Nasal Vowels Pronunciation
+                </button>
+              </div>
+            </div>
+
+            <!-- Doubt Query Box -->
+            <div class="ai-card-container">
+              <form id="doubt-form" class="ai-input-form">
+                <div class="form-group">
+                  <label for="doubt-question-input" class="form-label">Your Question or Doubt:</label>
+                  <textarea
+                    id="doubt-question-input"
+                    class="ai-textarea"
+                    rows="3"
+                    placeholder="e.g. Why is 'merci' followed by 'de' sometimes and 'pour' other times? Or how do I tell if a noun ending in -e is masculine or feminine?"
+                    required
+                  ></textarea>
+                </div>
+                <div class="form-group" style="margin-bottom: 1.25rem;">
+                  <label for="doubt-context-input" class="form-label">Specific Word / Sentence Context (Optional):</label>
+                  <input
+                    type="text"
+                    id="doubt-context-input"
+                    class="ai-text-input"
+                    placeholder="e.g. merci pour le cadeau vs merci de m'aider"
+                  />
+                </div>
+                <div class="form-submit-row">
+                  <button type="submit" class="ai-submit-btn" id="doubt-submit-btn">
+                    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
+                    <span>Ask French Tutor</span>
+                  </button>
+                  <button type="button" class="ai-clear-btn" id="doubt-clear-btn">Clear</button>
+                </div>
+              </form>
+
+              <!-- Loading Indicator -->
+              <div class="ai-loading-box" id="doubt-loading-box" style="display: none;">
+                <div class="ai-spinner"></div>
+                <div class="ai-loading-text">Analyzing your question with the French Linguistic Tutor...</div>
+              </div>
+
+              <!-- Doubt Answer Display -->
+              <div class="doubt-response-card" id="doubt-response-card" style="display: none;">
+                <div class="response-header">
+                  <div class="response-user-query" id="doubt-query-display"></div>
+                  <div class="response-actions">
+                    <button type="button" class="tool-action-btn" id="doubt-speak-btn" title="Listen to French examples">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+                      <span>Listen</span>
+                    </button>
+                    <button type="button" class="tool-action-btn" id="doubt-copy-btn" title="Copy explanation">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                      <span>Copy</span>
+                    </button>
+                  </div>
+                </div>
+                <div class="response-body markdown-content" id="doubt-answer-display"></div>
+              </div>
+
+              <!-- Recent Doubts History -->
+              <div class="recent-doubts-section" id="recent-doubts-section" style="display: none;">
+                <h3 class="recent-doubts-title">Recent Doubts in this Session</h3>
+                <div class="recent-doubts-list" id="recent-doubts-list"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- View 4: AI French <-> English Translator View -->
+          <div class="view-panel" id="view-translator">
+            <div class="ai-view-hero">
+              <div class="ai-hero-badge">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m5 8 6 6"/><path d="m4 14 6-6 2-3"/><path d="M2 5h12"/><path d="M7 2h1"/><path d="m22 22-5-10-5 10"/><path d="M14 18h6"/></svg>
+                <span>Bilingual Translation Suite</span>
+              </div>
+              <h2 class="view-main-title">French &harr; English Translator</h2>
+              <p class="view-description">
+                Fast, instant Google Translate-style translations and in-depth linguistic reference breakdowns with direct library saving.
+              </p>
+            </div>
+
+            <!-- Translator Mode Tabs (Google Translate vs Deep AI Study) -->
+            <div class="trans-mode-tabs-bar" role="tablist" aria-label="Translator Mode">
+              <button type="button" class="trans-mode-tab active" id="tab-trans-google" role="tab" aria-selected="true">
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                <span>Google Translate Style</span>
+              </button>
+              <button type="button" class="trans-mode-tab" id="tab-trans-deep" role="tab" aria-selected="false">
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/><path d="M6 6h10"/><path d="M6 10h10"/></svg>
+                <span>Deep Lexicon &amp; Analysis</span>
+              </button>
+            </div>
+
+            <!-- MODE 1: Google Translate Style Container -->
+            <div class="google-trans-container" id="google-trans-container">
+              <!-- Top Language Selector Bar (Google Translate UI) -->
+              <div class="gt-lang-bar">
+                <div class="gt-lang-group" id="gt-source-langs">
+                  <button type="button" class="gt-lang-tab" data-lang="auto">Detect language</button>
+                  <button type="button" class="gt-lang-tab active" data-lang="en">English</button>
+                  <button type="button" class="gt-lang-tab" data-lang="fr">French</button>
+                </div>
+
+                <button type="button" class="gt-swap-btn" id="gt-swap-btn" aria-label="Swap languages">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 3 21 8 16 13"/><line x1="21" y1="8" x2="3" y2="8"/><polyline points="8 21 3 16 8 11"/><line x1="3" y1="16" x2="21" y2="16"/></svg>
+                </button>
+
+                <div class="gt-lang-group" id="gt-target-langs">
+                  <button type="button" class="gt-lang-tab active" data-lang="fr">French</button>
+                  <button type="button" class="gt-lang-tab" data-lang="en">English</button>
+                </div>
+              </div>
+
+              <!-- Main Google Translate Dual-Pane Card -->
+              <div class="gt-dual-card">
+                <!-- Source Pane (Left) -->
+                <div class="gt-pane gt-source-pane">
+                  <div class="gt-textarea-wrapper">
+                    <textarea
+                      id="gt-input-text"
+                      class="gt-textarea"
+                      placeholder="Type words, phrases, or full sentences to translate..."
+                      rows="6"
+                      maxlength="3000"
+                    ></textarea>
+                    <button type="button" class="gt-icon-btn gt-clear-btn" id="gt-clear-btn" aria-label="Clear source text" style="display: none;">
+                      &times;
+                    </button>
+                  </div>
+
+                  <div class="gt-pane-footer">
+                    <div class="gt-footer-left">
+                      <button type="button" class="gt-action-btn" id="gt-source-speak-btn" title="Listen to text">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>
+                      </button>
+                      <button type="button" class="gt-action-btn" id="gt-source-mic-btn" title="Voice input (Speech to text)">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="22"/></svg>
+                      </button>
+                      <span class="gt-char-counter" id="gt-char-counter">0 / 3000</span>
+                    </div>
+                    <div class="gt-footer-right">
+                      <button type="button" class="gt-translate-btn" id="gt-translate-btn">
+                        <span>Translate</span>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Target Pane (Right) -->
+                <div class="gt-pane gt-target-pane">
+                  <!-- Loading overlay in output pane -->
+                  <div class="gt-loading-indicator" id="gt-loading" style="display: none;">
+                    <div class="ai-spinner"></div>
+                    <span>Translating...</span>
+                  </div>
+
+                  <div class="gt-output-body">
+                    <div class="gt-output-text placeholder" id="gt-output-text">Translation will appear here</div>
+                    <div class="gt-phonetic" id="gt-phonetic" style="display: none;"></div>
+                  </div>
+
+                  <div class="gt-pane-footer">
+                    <div class="gt-footer-left">
+                      <button type="button" class="gt-action-btn" id="gt-target-speak-btn" title="Listen to translation">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>
+                      </button>
+                      <button type="button" class="gt-action-btn" id="gt-target-copy-btn" title="Copy translation">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                      </button>
+                    </div>
+                    <div class="gt-footer-right">
+                      <button type="button" class="gt-save-btn" id="gt-save-btn" style="display: none;" title="Save translated French word to Library">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                        <span>+ Add to Library</span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Google Translate Style Dictionary & Definitions Section (for single words) -->
+              <div class="gt-dict-card" id="gt-dict-card" style="display: none;">
+                <div class="gt-dict-header">
+                  <div class="gt-dict-title">Dictionary &amp; Common Meanings</div>
+                  <span class="gt-dict-badge" id="gt-dict-word-badge">French &bull; English</span>
+                </div>
+                <div class="gt-dict-entries" id="gt-dict-entries"></div>
+              </div>
+            </div>
+
+            <!-- MODE 2: Deep AI Lexicon Study Container -->
+            <div class="deep-trans-container" id="deep-trans-container" style="display: none;">
+              <!-- Translator Interactive Grid -->
+              <div class="translator-grid">
+                <!-- Source Box -->
+                <div class="translator-panel source-panel">
+                  <div class="panel-header">
+                    <div class="lang-selector-group">
+                      <span class="active-lang-badge" id="source-lang-label">English</span>
+                      <button type="button" class="lang-swap-btn" id="lang-swap-btn" aria-label="Swap translation direction">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 3 21 8 16 13"/><line x1="21" y1="8" x2="3" y2="8"/><polyline points="8 21 3 16 8 11"/><line x1="3" y1="16" x2="21" y2="16"/></svg>
+                      </button>
+                      <span class="active-lang-badge" id="target-lang-label">French</span>
+                    </div>
+                    <button type="button" class="panel-clear-btn" id="trans-clear-btn">Clear</button>
+                  </div>
+
+                  <textarea
+                    id="trans-input-text"
+                    class="translator-textarea"
+                    rows="6"
+                    placeholder="Type or paste English or French text to translate..."
+                    maxlength="2000"
+                  ></textarea>
+
+                  <div class="panel-footer">
+                    <div class="char-count" id="trans-char-count">0 / 2000</div>
+                    <div style="display: flex; gap: 0.5rem; align-items: center;">
+                      <button type="button" class="sample-phrase-btn" id="sample-phrase-btn" title="Insert a sample sentence">
+                        Sample phrase
+                      </button>
+                      <button type="button" class="ai-submit-btn" id="trans-submit-btn">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                        <span>Analyze &amp; Translate</span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Output Box -->
+                <div class="translator-panel target-panel">
+                  <div class="panel-header">
+                    <span class="panel-heading" id="target-header-title">Translation (French)</span>
+                    <div class="panel-actions" id="trans-result-actions" style="display: none;">
+                      <button type="button" class="tool-action-btn" id="trans-speak-btn" title="Listen to French speech">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>
+                        <span>Listen</span>
+                      </button>
+                      <button type="button" class="tool-action-btn" id="trans-copy-btn" title="Copy translated text">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                        <span>Copy</span>
+                      </button>
+                    </div>
+                  </div>
+
+                  <!-- Translator Loading Spinner -->
+                  <div class="ai-loading-box" id="trans-loading-box" style="display: none; padding: 3rem 1rem;">
+                    <div class="ai-spinner"></div>
+                    <div class="ai-loading-text">Generating literary translation &amp; vocabulary breakdown...</div>
+                  </div>
+
+                  <!-- Empty Placeholder -->
+                  <div class="trans-placeholder" id="trans-placeholder">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="opacity: 0.4; margin-bottom: 0.5rem;"><path d="m5 8 6 6"/><path d="m4 14 6-6 2-3"/><path d="M2 5h12"/><path d="M7 2h1"/><path d="m22 22-5-10-5 10"/><path d="M14 18h6"/></svg>
+                    <div>Translations and linguistic breakdown will appear here.</div>
+                  </div>
+
+                  <!-- Result Display Area -->
+                  <div class="trans-result-content" id="trans-result-content" style="display: none;">
+                    <div class="translated-text-box" id="translated-text-box"></div>
+
+                    <!-- Alternative Translation -->
+                    <div class="trans-sub-box" id="trans-alt-box" style="display: none;">
+                      <span class="sub-box-title">Alternative Phrasing:</span>
+                      <span id="trans-alt-text"></span>
+                    </div>
+
+                    <!-- Cultural / Grammatical Notes -->
+                    <div class="trans-sub-box" id="trans-notes-box" style="display: none;">
+                      <span class="sub-box-title">Linguistic Nuance:</span>
+                      <span id="trans-notes-text"></span>
+                    </div>
+
+                    <!-- Extracted Key Vocabulary Breakdown -->
+                    <div class="vocab-breakdown-section" id="vocab-breakdown-section">
+                      <div class="breakdown-title-row">
+                        <span class="breakdown-title">Extracted French Vocabulary:</span>
+                        <span class="breakdown-hint">Click &ldquo;+ Add to Library&rdquo; to save any word!</span>
+                      </div>
+                      <div class="breakdown-cards-grid" id="breakdown-cards-grid"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+
+    <!-- Word Detail Modal Dialog -->
+    <div class="modal-backdrop" id="word-modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="modal-french-word">
+      <div class="word-detail-modal">
+        <div class="modal-header">
+          <div class="modal-title-group">
+            <div class="modal-category-path" id="modal-category-path">Food & Drink &rsaquo; Food</div>
+            <div class="modal-word-row">
+              <h2 class="modal-french-word" id="modal-french-word">pain</h2>
+              <button type="button" class="modal-audio-btn" id="modal-audio-btn" aria-label="Listen to French pronunciation">
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>
+                <span>&Eacute;couter</span>
+              </button>
+              <button type="button" class="modal-ask-doubt-btn" id="modal-ask-doubt-btn" title="Ask AI French Tutor about this word">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
+                <span>Ask AI Tutor</span>
+              </button>
+            </div>
+            <div class="modal-pronunciation" id="modal-pronunciation">/pɛ̃/</div>
+            <div class="modal-translation-row" id="modal-translation">bread</div>
+          </div>
+          <div style="display:flex; align-items:center; gap:0.5rem;">
+            <span class="cefr-badge" id="modal-level-badge">A1</span>
+            <span class="card-type-label" id="modal-type-badge" style="font-size: 0.8rem;">noun</span>
+            <button type="button" class="modal-close-btn" id="modal-close-btn" aria-label="Close word details">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="modal-body-scroll">
+          <!-- Grammatical Info Grid (Nouns, Verbs, Adjectives) -->
+          <div id="modal-grammar-section">
+            <div class="modal-section-title">Grammatical Information</div>
+            <div class="grammar-info-grid" id="modal-grammar-grid">
+              <!-- Dynamically populated only when fields exist -->
+            </div>
+          </div>
+
+          <!-- Verb Conjugation Table (Verbs only) -->
+          <div id="modal-conjugation-section" style="display: none;">
+            <div class="modal-section-title">Present Tense Conjugation (Présent de l'Indicatif)</div>
+            <table class="conjugation-table">
+              <thead>
+                <tr>
+                  <th>Pronoun</th>
+                  <th>Conjugated Form</th>
+                </tr>
+              </thead>
+              <tbody id="modal-conjugation-table-body"></tbody>
+            </table>
+          </div>
+
+          <!-- Definition -->
+          <div id="modal-definition-section">
+            <div class="modal-section-title">Definition</div>
+            <p style="font-size: 0.95rem; color: var(--text-secondary); line-height: 1.5;" id="modal-definition-text"></p>
+          </div>
+
+          <!-- Context Example Sentence -->
+          <div id="modal-example-section">
+            <div class="modal-section-title">Example in Context</div>
+            <div class="example-box">
+              <div class="example-french-text" id="modal-example-french"></div>
+              <div class="example-english-text" id="modal-example-english"></div>
+            </div>
+          </div>
+
+          <!-- Notes & Usage Tips -->
+          <div id="modal-notes-section">
+            <div class="modal-section-title">Notes &amp; Usage Tips</div>
+            <div class="modal-notes-text" id="modal-notes-text"></div>
+          </div>
+
+          <!-- Tags -->
+          <div id="modal-tags-section">
+            <div class="modal-section-title">Tags</div>
+            <div class="modal-tags-container" id="modal-tags-list"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal 2: Add Word with AI Modal Dialog -->
+    <div class="modal-backdrop" id="add-word-modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="add-word-modal-title">
+      <div class="word-detail-modal add-word-modal">
+        <div class="modal-header">
+          <div class="modal-title-group">
+            <div class="ai-hero-badge" style="margin-bottom: 0.3rem;">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+              <span>AI Lexicographer</span>
+            </div>
+            <h2 class="modal-french-word" id="add-word-modal-title" style="font-size: 1.35rem;">Add Missing Word to Library</h2>
+          </div>
+          <button type="button" class="modal-close-btn" id="add-word-close-btn" aria-label="Close dialog">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+        </div>
+
+        <div class="modal-body-scroll">
+          <form id="add-word-form" style="margin-bottom: 1.5rem;">
+            <div class="form-group">
+              <label for="add-word-input" class="form-label">French Word or Expression to Add:</label>
+              <input
+                type="text"
+                id="add-word-input"
+                class="ai-text-input"
+                placeholder="e.g. dépaysant, boulot, se la couler douce, numérique..."
+                required
+                autocomplete="off"
+              />
+            </div>
+            <div class="form-group" style="margin-bottom: 1.25rem;">
+              <label for="add-word-hint-input" class="form-label">Optional Hint / Part of Speech / Context:</label>
+              <input
+                type="text"
+                id="add-word-hint-input"
+                class="ai-text-input"
+                placeholder="e.g. informal slang for job, or travel adjective, or reflexive verb"
+              />
+            </div>
+            <div style="display: flex; gap: 0.5rem; justify-content: flex-end;">
+              <button type="submit" class="ai-submit-btn" id="add-word-submit-btn">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                <span>Analyze &amp; Generate with AI</span>
+              </button>
+            </div>
+          </form>
+
+          <!-- Loading Box -->
+          <div class="ai-loading-box" id="add-word-loading-box" style="display: none;">
+            <div class="ai-spinner"></div>
+            <div class="ai-loading-text">Analyzing linguistics, CEFR level, grammar, and conjugation with AI...</div>
+          </div>
+
+          <!-- Generated Preview Result -->
+          <div id="add-word-preview-container" style="display: none;">
+            <div class="preview-headline-row">
+              <span class="preview-badge">AI Generated Linguistic Entry</span>
+              <span style="font-size: 0.8rem; color: var(--text-muted);">Review before saving</span>
+            </div>
+
+            <!-- Preview Card -->
+            <div class="add-word-preview-card" id="add-word-preview-card"></div>
+
+            <div class="preview-action-row">
+              <button type="button" class="btn-cancel" id="add-word-cancel-btn">Cancel</button>
+              <button type="button" class="btn-save-word" id="add-word-confirm-btn">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                <span>Add to Vocabulary Library</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Toast Notification Banner -->
+    <div class="toast-notification" id="toast-notification" role="status" aria-live="polite"></div>
+
+    <!-- Pure Vanilla JavaScript application script -->
+    <script type="module" src="./script.js"></script>
+  </body>
+</html>

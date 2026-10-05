@@ -1,0 +1,7 @@
+{
+  "name": "French Vocabulary Library",
+  "description": "A comprehensive, beautifully organised French vocabulary reference of 135,000 words with CEFR levels, categories, native audio pronunciation, AI French Doubt Clearing tutor, bilingual translator, and AI missing word generator.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
+
